@@ -7,6 +7,8 @@ import ChatHeader from "../components/ChatHeader";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
+import MessageInput from "../components/MessageInput";
+import MessagesBox from "../components/MessagesBox";
 
 const useStyles = makeStyles({
   gridItem: {
@@ -16,6 +18,12 @@ const useStyles = makeStyles({
     height: "70vh",
     backgroundColor: "white",
   },
+  // gridChatBox: {
+  //   height: "70%",
+  // },
+  // gridChat: {
+  //   height: "15%",
+  // },
 });
 
 let socket;
@@ -54,22 +62,22 @@ const Chat = ({ location }) => {
     };
   }, [ENDPOINT, location.search]);
 
-  // useEffect(() => {
-  //   socket.on("message", (message) => {
-  //     setMessages([...messages, message]);
-  //   });
+  useEffect(() => {
+    socket.on("message", (message) => {
+      setMessages([...messages, message]);
+    });
 
-  //   // return () => {
-  //   //   cleanup;
-  //   // };
-  // }, [messages]);
+    // return () => {
+    //   cleanup;
+    // };
+  }, [messages]);
 
-  // const sendMessage = (e) => {
-  //   e.preventDefault();
-  //   if (singleMessage) {
-  //     socket.emit("sendMessage", singleMessage, () => setSingleMessage(""));
-  //   }
-  // };
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (singleMessage) {
+      socket.emit("sendMessage", singleMessage, () => setSingleMessage(""));
+    }
+  };
 
   return (
     <Container maxWidth="md">
@@ -77,6 +85,12 @@ const Chat = ({ location }) => {
         <Grid item xs={12} className={classes.gridItem}></Grid>
         <Grid item xs={12} className={classes.gridForm}>
           <ChatHeader room={room} />
+          <MessagesBox messages={messages} name={name} />
+          <MessageInput
+            message={singleMessage}
+            setMessage={setSingleMessage}
+            sendMessage={sendMessage}
+          />
         </Grid>
         <Grid item xs={12} className={classes.gridItem}></Grid>
       </Grid>
