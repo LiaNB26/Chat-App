@@ -7,24 +7,25 @@ import FormControl from "@material-ui/core/FormControl";
 import PersonIcon from "@material-ui/icons/Person";
 import ChatIcon from "@material-ui/icons/Chat";
 
-const TextInput = ({ placeholderValue, name, room }) => {
+const TextInput = ({ placeholderValue, name, room, saveInputHandler }) => {
   const [input, setInput] = React.useState("");
 
   const icon = name ? <PersonIcon /> : room && <ChatIcon />;
 
+  const onChangeHandler = (e) => {
+    const value = e.target.value;
+    setInput(value);
+    saveInputHandler(value);
+  };
+
   return (
-    <FormControl
-      fullWidth
-      variant="outlined"
-      style={{ backgroundColor: "white" }}
-    >
+    <FormControl fullWidth variant="outlined">
       <OutlinedInput
-        id="input-text"
+        style={{ backgroundColor: "white" }}
+        id={input}
         value={input}
         placeholder={placeholderValue}
-        onChange={(e) => {
-          setInput(e.target.value);
-        }}
+        onChange={onChangeHandler}
         endAdornment={<InputAdornment position="end">{icon}</InputAdornment>}
       />
     </FormControl>

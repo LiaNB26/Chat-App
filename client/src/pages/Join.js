@@ -10,14 +10,14 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   gridItem: {
     height: "30vh",
   },
-  gridFrom: {
+  gridForm: {
     height: "40vh",
   },
-}));
+});
 
 const Join = () => {
   const classes = useStyles();
@@ -25,12 +25,20 @@ const Join = () => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
 
+  const setNameHandler = (value) => {
+    setName(value);
+  };
+
+  const setRoomHandler = (value) => {
+    setRoom(value);
+  };
+
   return (
     <React.Fragment>
       <Container maxWidth="xs">
         <Grid container>
           <Grid item xs={12} className={classes.gridItem}></Grid>
-          <Grid item xs={12} className={classes.gridFrom}>
+          <Grid item xs={12} className={classes.gridForm}>
             <Typography variant="h2" align="center" style={{ color: "white" }}>
               Join
             </Typography>
@@ -41,10 +49,18 @@ const Join = () => {
               }}
             />
             <Box component="div" mt={2}>
-              <TextInput placeholderValue="Name" name />
+              <TextInput
+                placeholderValue="Name"
+                name
+                saveInputHandler={setNameHandler}
+              />
             </Box>
             <Box component="div" mt={2}>
-              <TextInput placeholderValue="Room" room />
+              <TextInput
+                placeholderValue="Room"
+                room
+                saveInputHandler={setRoomHandler}
+              />
             </Box>
 
             <Box component="div" mt={2}>
@@ -58,6 +74,7 @@ const Join = () => {
                   color="primary"
                   size="large"
                   fullWidth
+                  type="submit"
                 >
                   Sign In
                 </Button>
