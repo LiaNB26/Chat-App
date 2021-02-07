@@ -18,12 +18,13 @@ const useStyles = makeStyles({
     height: "70vh",
     backgroundColor: "white",
   },
-  // gridChatBox: {
-  //   height: "70%",
-  // },
-  // gridChat: {
-  //   height: "15%",
-  // },
+  box: {
+    height: "12%",
+  },
+  chat: {
+    height: "76%",
+    paddingBottom: 20,
+  },
 });
 
 let socket;
@@ -35,12 +36,12 @@ const Chat = ({ location }) => {
   const [messages, setMessages] = useState([]);
   const [singleMessage, setSingleMessage] = useState("");
 
-  const ENDPOINT = "localhost:5000";
+  const ENDPOINT = "http://localhost:5000";
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
 
-    console.log(name, room);
+    // console.log(name, room);
 
     socket = io(ENDPOINT, {
       withCredentials: true,
@@ -67,13 +68,12 @@ const Chat = ({ location }) => {
       setMessages([...messages, message]);
     });
 
-    // return () => {
-    //   cleanup;
-    // };
+    console.log(messages);
   }, [messages]);
 
   const sendMessage = (e) => {
     e.preventDefault();
+
     if (singleMessage) {
       socket.emit("sendMessage", singleMessage, () => setSingleMessage(""));
     }
@@ -84,13 +84,21 @@ const Chat = ({ location }) => {
       <Grid container>
         <Grid item xs={12} className={classes.gridItem}></Grid>
         <Grid item xs={12} className={classes.gridForm}>
-          <ChatHeader room={room} />
-          <MessagesBox messages={messages} name={name} />
-          <MessageInput
-            message={singleMessage}
-            setMessage={setSingleMessage}
-            sendMessage={sendMessage}
-          />
+          <Grid container style={{ height: "100%" }}>
+            <Grid item xs={12} className={classes.box}>
+              <ChatHeader room={room} />
+            </Grid>
+            <Grid item xs={12} className={classes.chat}>
+              <MessagesBox messages={messages} name={name} />
+            </Grid>
+            <Grid item xs={12} className={classes.box}>
+              <MessageInput
+                message={singleMessage}
+                setMessage={setSingleMessage}
+                sendMessage={sendMessage}
+              />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={12} className={classes.gridItem}></Grid>
       </Grid>

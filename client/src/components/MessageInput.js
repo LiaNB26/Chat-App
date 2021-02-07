@@ -10,12 +10,12 @@ import Grid from "@material-ui/core/Grid";
 
 const MessageInput = ({ message, setMessage, sendMessage }) => {
   return (
-    <Grid container>
-      <Grid item xs={9}>
-        <FormControl fullWidth variant="outlined">
+    <Grid container style={{ height: "100%" }}>
+      <Grid item xs={10} xs={9}>
+        <FormControl fullWidth variant="outlined" style={{ height: "100%" }}>
           <OutlinedInput
             color="secondary"
-            style={{ borderRadius: 0 }}
+            style={{ borderRadius: 0, height: "100%" }}
             value={message}
             placeholder="Type a message..."
             value={message}
@@ -31,7 +31,7 @@ const MessageInput = ({ message, setMessage, sendMessage }) => {
           />
         </FormControl>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2} xs={3}>
         <Button
           style={{ borderRadius: 0, height: "100%" }}
           disableElevation

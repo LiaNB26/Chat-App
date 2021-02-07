@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -11,6 +12,7 @@ import CloseIcon from "@material-ui/icons/Close";
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
+    height: "100%",
   },
   title: {
     flexGrow: 1,
@@ -22,21 +24,17 @@ const ChatHeader = ({ room }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ height: "100%" }}>
         <Toolbar>
-          <div>
-            <IconButton color="inherit" onClick={() => {}}>
-              <AccountCircle />
-            </IconButton>
-          </div>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
           <Typography variant="h6" className={classes.title}>
             {room}
           </Typography>
-          <div>
-            <IconButton color="inherit" onClick={() => {}}>
-              <CloseIcon />
-            </IconButton>
-          </div>
+          <a href="/" style={{ textDecoration: "none" }}>
+            <CloseIcon style={{ color: "white" }} />
+          </a>
         </Toolbar>
       </AppBar>
     </div>

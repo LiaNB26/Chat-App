@@ -27,18 +27,20 @@ io.on("connection", (socket) => {
       callback({ error: "error" });
     }
 
-    socket.emit("message", {
-      user: "admin",
-      text: `${user.name} welcome to the ${user.room} room chat`,
-    });
+    if (user) {
+      socket.emit("message", {
+        user: "admin",
+        text: `Hi ${user.name}, welcome to the ${user.room} chat room`,
+      });
 
-    socket.broadcast
-      .to(user.room)
-      .emit("message", { user: "admin", text: `${user.name} has joined!` });
+      socket.broadcast
+        .to(user.room)
+        .emit("message", { user: "admin", text: `${user.name} has joined!` });
 
-    socket.join(user.room);
+      socket.join(user.room);
 
-    callback();
+      callback();
+    }
   });
 
   // user sends messages
@@ -52,7 +54,14 @@ io.on("connection", (socket) => {
 
   // disconnects a user from a room chat
   socket.on("disconnect", () => {
-    console.log("User left!!!");
+    const user = removeUser(socket.id);
+
+    if (user) {
+      io.to(user.room).emit("message", {
+        user: "admin",
+        text: `${user.name} has left.`,
+      });
+    }
   });
 });
 
