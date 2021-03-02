@@ -7,24 +7,23 @@ import Box from "@material-ui/core/Box";
 const useStyles = makeStyles({
   currentUser: {
     backgroundColor: "lightblue",
-    // color: "white",
     padding: 10,
     borderRadius: 20,
     marginBottom: 10,
+    marginRight: 10,
   },
   otherUser: {
     backgroundColor: "lightgrey",
     padding: 10,
     borderRadius: 20,
     marginBottom: 10,
+    marginRight: 10,
   },
 });
 
 const Message = ({ message: { user, text }, name }) => {
   const classes = useStyles();
 
-  console.log(user, text);
-  console.log(name);
   let isSentByCurrentUser = false;
 
   const trimmedName = name.trim().toLowerCase();
@@ -38,16 +37,10 @@ const Message = ({ message: { user, text }, name }) => {
       component="div"
       className={isSentByCurrentUser ? classes.currentUser : classes.otherUser}
     >
-      <Typography
-        variant="subtitle1"
-        align={isSentByCurrentUser ? "right" : "left"}
-      >
+      <Typography variant="subtitle1" align="left">
         {isSentByCurrentUser ? trimmedName : user}
       </Typography>
-      <Typography
-        variant="subtitle2"
-        align={isSentByCurrentUser ? "right" : "left"}
-      >
+      <Typography variant="subtitle2" align="left">
         {text}
       </Typography>
     </Box>
